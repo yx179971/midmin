@@ -1,0 +1,15 @@
+services:
+  db:
+    container_name: ${APP_NAME}_pg
+    image: 'postgres:17.7-alpine'
+    restart: always
+    ports:
+      - ${PG_PORT}:5432
+    environment:
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASS}
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+#      - ./pgdata:/var/lib/postgresql/data
+      - ~/midmin_pg/pgdata:/var/lib/postgresql/data
