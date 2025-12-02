@@ -27,3 +27,9 @@ $ npm start
 
 
 [midway]: https://midwayjs.org
+
+- [ ] pm2部署
+- [ ] 限流
+- [ ] mock
+- [ ] 单测
+- [ ] websocket

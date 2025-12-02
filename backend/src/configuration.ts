@@ -5,11 +5,16 @@ import * as info from '@midwayjs/info';
 import * as crossDomain from '@midwayjs/cross-domain';
 import * as busboy from '@midwayjs/busboy';
 import * as staticFile from '@midwayjs/static-file';
+import * as security from '@midwayjs/security';
 
 import { join } from 'path';
-// import { DefaultErrorFilter } from './filter/default.filter';
-// import { NotFoundFilter } from './filter/notfound.filter';
 import { ReportMiddleware } from './middleware/report.middleware';
+
+import { AuthGuard } from './guard/auth.guard';
+import { PermissionGuard } from './guard/permission.guard';
+
+import { DefaultErrorFilter } from './filter/default.filter';
+import { NotFoundFilter } from './filter/notfound.filter';
 
 @Configuration({
   imports: [
@@ -22,6 +27,7 @@ import { ReportMiddleware } from './middleware/report.middleware';
     crossDomain,
     busboy,
     staticFile,
+    security,
   ],
   importConfigs: [join(__dirname, './config')],
 })
@@ -30,9 +36,10 @@ export class MainConfiguration {
   app: koa.Application;
 
   async onReady() {
-    // add middleware
     this.app.useMiddleware([ReportMiddleware]);
-    // add filter
-    // this.app.useFilter([NotFoundFilter, DefaultErrorFilter]);
+
+    this.app.useGuard([AuthGuard, PermissionGuard]);
+
+    this.app.useFilter([NotFoundFilter, DefaultErrorFilter]);
   }
 }

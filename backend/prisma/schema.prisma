@@ -8,17 +8,92 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id       String  @id @default(uuid()) @db.Uuid
+  username String  @unique
+  password String
+  email    String  @unique
+  mobile   String  @unique
+  avatar   String  @default("")
+  bio      String  @default("")
+  groupId  String? @db.Uuid
+
+  lastLoginAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  group   PermissionGroup? @relation(fields: [groupId], references: [id])
+  posts   Post[]
+  comment Comment[]
+}
+
+model PermissionGroup {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique
+  permissions String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users User[]
+}
+
+model Category {
+  id          String @id @default(uuid()) @db.Uuid
+  name        String @unique
+  description String @default("")
+  sortOrder   Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   posts Post[]
 }
 
 model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
+  id         String  @id @default(uuid()) @db.Uuid
+  title      String
+  content    String  @default("")
+  published  Boolean @default(false)
+  isPinned   Boolean @default(false)
+  authorId   String  @db.Uuid
+  categoryId String  @db.Uuid
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  author   User      @relation(fields: [authorId], references: [id])
+  category Category  @relation(fields: [categoryId], references: [id])
+  comments Comment[]
+}
+
+model Comment {
+  id       String  @id @default(uuid()) @db.Uuid
+  content  String
+  isPinned Boolean @default(false)
+  authorId String  @db.Uuid
+  postId   String  @db.Uuid
+  parentId String? @db.Uuid
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  author  User      @relation(fields: [authorId], references: [id])
+  post    Post      @relation(fields: [postId], references: [id])
+  parent  Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies Comment[] @relation("CommentReplies")
+}
+
+model AuditLog {
+  id         String @id @default(uuid()) @db.Uuid
+  userId     String @db.Uuid
+  action     String
+  resource   String
+  resourceId String @db.Uuid
+  details    Json   @default("{}") @db.JsonB
+  ip         String @default("")
+  userAgent  String @default("")
+
+  createdAt DateTime @default(now())
 }
