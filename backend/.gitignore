@@ -11,5 +11,3 @@ run/
 *.un~
 .tsbuildinfo
 .tsbuildinfo.*
-
-src/generated/

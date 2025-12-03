@@ -6,8 +6,8 @@ import { prisma } from '../lib/prisma';
 export class AuthGuard implements IGuard<Context> {
   async canActivate(
     context: Context,
-    supplierClz: any,
-    methodName: string
+    _supplierClz: any,
+    _methodName: string
   ): Promise<boolean> {
     if (context.session.userId) {
       const user = await prisma.user.findUnique({

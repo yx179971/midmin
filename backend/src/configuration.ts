@@ -6,6 +6,7 @@ import * as crossDomain from '@midwayjs/cross-domain';
 import * as busboy from '@midwayjs/busboy';
 import * as staticFile from '@midwayjs/static-file';
 import * as security from '@midwayjs/security';
+import * as passport from '@midwayjs/passport';
 
 import { join } from 'path';
 import { ReportMiddleware } from './middleware/report.middleware';
@@ -15,6 +16,8 @@ import { PermissionGuard } from './guard/permission.guard';
 
 import { DefaultErrorFilter } from './filter/default.filter';
 import { NotFoundFilter } from './filter/notfound.filter';
+
+import 'dotenv/config';
 
 @Configuration({
   imports: [
@@ -28,6 +31,7 @@ import { NotFoundFilter } from './filter/notfound.filter';
     busboy,
     staticFile,
     security,
+    passport,
   ],
   importConfigs: [join(__dirname, './config')],
 })

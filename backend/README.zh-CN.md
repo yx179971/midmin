@@ -33,3 +33,4 @@ $ npm start
 - [ ] mock
 - [ ] 单测
 - [ ] websocket
+- [x] passport

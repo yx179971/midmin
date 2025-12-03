@@ -4,7 +4,7 @@ import { prisma } from '../lib/prisma';
 
 @Provide()
 export class UserService {
-  async getUser(options: IUserOptions) {
+  async getUser(_options: IUserOptions) {
     return prisma.user.findFirst();
   }
 }

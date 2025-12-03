@@ -11,8 +11,8 @@ model User {
   id       String  @id @default(uuid()) @db.Uuid
   username String  @unique
   password String
-  email    String  @unique
-  mobile   String  @unique
+  email    String? @unique
+  mobile   String? @unique
   avatar   String  @default("")
   bio      String  @default("")
   groupId  String? @db.Uuid

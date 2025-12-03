@@ -5,7 +5,7 @@ import { SystemPermissionGroup } from '../interface/permissionGroup';
 export async function checkPermission(
   ctx: Context,
   requiredPermission: string
-): Promise<boolean> {
+) {
   if (!ctx.state.user) {
     throw new httpError.UnauthorizedError('未登录，请先登录');
   }

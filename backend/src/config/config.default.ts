@@ -33,11 +33,13 @@ export default {
         },
         // preload: true,
       },
-      uploads: {
-        prefix: '/uploads',
-        dir: 'uploads',
-        preload: false,
+      upload: {
+        prefix: '/upload',
+        dir: 'upload',
       },
     },
+  },
+  passport: {
+    session: false,
   },
 } as MidwayConfig;
