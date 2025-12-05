@@ -51,6 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Conf: 'Conf',
   PermissionGroup: 'PermissionGroup',
   Category: 'Category',
   Post: 'Post',
@@ -82,13 +83,24 @@ export const UserScalarFieldEnum = {
   mobile: 'mobile',
   avatar: 'avatar',
   bio: 'bio',
+  failCount: 'failCount',
+  status: 'status',
   groupId: 'groupId',
+  lockUntil: 'lockUntil',
   lastLoginAt: 'lastLoginAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const ConfScalarFieldEnum = {
+  key: 'key',
+  value: 'value'
+} as const
+
+export type ConfScalarFieldEnum = (typeof ConfScalarFieldEnum)[keyof typeof ConfScalarFieldEnum]
 
 
 export const PermissionGroupScalarFieldEnum = {

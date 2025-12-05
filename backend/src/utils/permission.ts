@@ -16,7 +16,7 @@ export async function checkPermission(
 
   if (ctx.state.user.group.name !== SystemPermissionGroup.SUPER_ADMIN) {
     if (
-      !(ctx.state.user.group.permissions || []).some(p =>
+      !(ctx.state.user.group.permissions || []).some((p: string) =>
         requiredPermission.includes(p)
       )
     ) {

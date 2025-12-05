@@ -42,4 +42,9 @@ export default {
   passport: {
     session: false,
   },
+  security: {
+    csrf: {
+      enable: false,
+    },
+  },
 } as MidwayConfig;

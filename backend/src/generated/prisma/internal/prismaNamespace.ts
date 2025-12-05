@@ -384,6 +384,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  Conf: 'Conf',
   PermissionGroup: 'PermissionGroup',
   Category: 'Category',
   Post: 'Post',
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "permissionGroup" | "category" | "post" | "comment" | "auditLog"
+    modelProps: "user" | "conf" | "permissionGroup" | "category" | "post" | "comment" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -479,6 +480,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    Conf: {
+      payload: Prisma.$ConfPayload<ExtArgs>
+      fields: Prisma.ConfFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ConfFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ConfFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload>
+        }
+        findFirst: {
+          args: Prisma.ConfFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ConfFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload>
+        }
+        findMany: {
+          args: Prisma.ConfFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload>[]
+        }
+        create: {
+          args: Prisma.ConfCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload>
+        }
+        createMany: {
+          args: Prisma.ConfCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ConfCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload>[]
+        }
+        delete: {
+          args: Prisma.ConfDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload>
+        }
+        update: {
+          args: Prisma.ConfUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload>
+        }
+        deleteMany: {
+          args: Prisma.ConfDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ConfUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ConfUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload>[]
+        }
+        upsert: {
+          args: Prisma.ConfUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfPayload>
+        }
+        aggregate: {
+          args: Prisma.ConfAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateConf>
+        }
+        groupBy: {
+          args: Prisma.ConfGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConfGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ConfCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConfCountAggregateOutputType> | number
         }
       }
     }
@@ -899,13 +974,24 @@ export const UserScalarFieldEnum = {
   mobile: 'mobile',
   avatar: 'avatar',
   bio: 'bio',
+  failCount: 'failCount',
+  status: 'status',
   groupId: 'groupId',
+  lockUntil: 'lockUntil',
   lastLoginAt: 'lastLoginAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const ConfScalarFieldEnum = {
+  key: 'key',
+  value: 'value'
+} as const
+
+export type ConfScalarFieldEnum = (typeof ConfScalarFieldEnum)[keyof typeof ConfScalarFieldEnum]
 
 
 export const PermissionGroupScalarFieldEnum = {
@@ -1038,20 +1124,6 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'DateTime'
- */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime[]'
- */
-export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1062,6 +1134,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -1179,6 +1265,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  conf?: Prisma.ConfOmit
   permissionGroup?: Prisma.PermissionGroupOmit
   category?: Prisma.CategoryOmit
   post?: Prisma.PostOmit

@@ -22,6 +22,11 @@ export * from './enums';
  */
 export type User = Prisma.UserModel
 /**
+ * Model Conf
+ * 
+ */
+export type Conf = Prisma.ConfModel
+/**
  * Model PermissionGroup
  * 
  */

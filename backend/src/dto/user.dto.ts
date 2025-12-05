@@ -1,72 +1,43 @@
 import { Rule, RuleType } from '@midwayjs/validate';
+import { BaseListParamsDTO } from './base';
 
-export class UserLoginDTO {
-  @Rule(RuleType.string().required())
-  username: string;
+export class UserListDTO extends BaseListParamsDTO {}
 
-  @Rule(RuleType.string().required())
-  password: string;
-}
-
-export class UserRegisterDTO {
+export class MeUpdateDTO {
   @Rule(RuleType.string().required().min(3).max(20))
   username: string;
 
+  @Rule(RuleType.string().min(0).max(200).default(''))
+  bio?: string;
+
+  @Rule(RuleType.string().min(0).max(500).default(''))
+  avatar?: string;
+
   @Rule(
     RuleType.string()
-      .required()
+      .optional()
       .regex(/^1[3-9]\d{9}$/)
   )
-  mobile: string;
+  mobile?: string;
 
   @Rule(RuleType.string().email().optional())
   email?: string;
-
-  @Rule(RuleType.string().required().min(6).max(30))
-  password: string;
-
-  @Rule(RuleType.string().min(0).max(200))
-  contact?: string;
-
-  @Rule(RuleType.string().required().length(6))
-  smsCode: string;
 }
 
-export class UserUpdateDTO {
-  @Rule(RuleType.string().min(0).max(50))
-  username?: string;
-
-  @Rule(RuleType.string().min(0).max(200))
-  bio?: string;
-
-  @Rule(RuleType.string().min(0).max(500))
-  avatar?: string;
-
+export class UserUpdateDTO extends MeUpdateDTO {
   @Rule(RuleType.string().min(0).max(20))
-  mobile?: string;
+  status?: string;
 
-  @Rule(RuleType.string().min(0).max(200))
-  contact?: string;
+  @Rule(RuleType.string().min(0).max(50))
+  groupId?: string;
+
+  @Rule(RuleType.date().optional().default(null))
+  lockUntil?: Date;
 }
 
-export class ForgotPasswordDTO {
-  @Rule(
-    RuleType.string()
-      .required()
-      .regex(/^1[3-9]\d{9}$/)
-  )
-  mobile: string;
-
-  @Rule(RuleType.string().required().length(6))
-  smsCode: string;
-
-  @Rule(RuleType.string().required().min(6).max(30))
-  newPassword: string;
-}
-
-export class ResetPasswordDTO {
-  @Rule(RuleType.string().required())
-  oldPassword: string;
+export class UserUpdatePwdDTO {
+  @Rule(RuleType.string().optional().min(6).max(30).default(''))
+  password?: string;
 
   @Rule(RuleType.string().required().min(6).max(30))
   newPassword: string;

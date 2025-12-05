@@ -9,4 +9,7 @@ export class PassportLocalMiddleware extends PassportMiddleware(LocalStrategy) {
       // failureRedirect: '/login',
     };
   }
+  // resolve(): any {
+  //   return super.resolve()
+  // }
 }

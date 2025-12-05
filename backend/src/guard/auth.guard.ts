@@ -1,6 +1,7 @@
 import { Guard, httpError, IGuard } from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { prisma } from '../lib/prisma';
+import { UserStatus } from '../interface';
 
 @Guard()
 export class AuthGuard implements IGuard<Context> {
@@ -20,6 +21,10 @@ export class AuthGuard implements IGuard<Context> {
       });
       if (user) {
         context.state.user = user;
+        if (user.status === UserStatus.mustChangePwd) {
+          context.redirect('/me/update-password');
+          return false;
+        }
         return true;
       }
     }
@@ -35,8 +40,8 @@ export class AuthGuard implements IGuard<Context> {
       '/api/health', // 健康检查
       '/api/auth/login', // 登录
       '/api/auth/register', // 注册
-      '/api/auth/forgot-password', // 忘记密码
-      '/api/auth/send-sms', // 发送短信验证码
+      '/api/auth/send-code', // 发送短信验证码
+      '/api/auth/new-password', // 忘记密码
     ];
 
     const isReadOnlyRequest =

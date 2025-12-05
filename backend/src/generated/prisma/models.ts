@@ -8,6 +8,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/Conf'
 export type * from './models/PermissionGroup'
 export type * from './models/Category'
 export type * from './models/Post'

@@ -7,12 +7,23 @@ CREATE TABLE "User" (
     "mobile" TEXT,
     "avatar" TEXT NOT NULL DEFAULT '',
     "bio" TEXT NOT NULL DEFAULT '',
+    "failCount" INTEGER NOT NULL DEFAULT 0,
+    "status" TEXT NOT NULL DEFAULT '',
     "groupId" UUID,
+    "lockUntil" TIMESTAMP(3),
     "lastLoginAt" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Conf" (
+    "key" VARCHAR(50) NOT NULL,
+    "value" TEXT NOT NULL,
+
+    CONSTRAINT "Conf_pkey" PRIMARY KEY ("key")
 );
 
 -- CreateTable

@@ -9,9 +9,7 @@ export class BaseListParamsDTO {
 
   @Rule(RuleType.boolean().allow('').optional())
   deleted?: boolean;
-}
 
-export class BaseSearchParamsDTO extends BaseListParamsDTO {
   @Rule(RuleType.number().default(1))
   page?: number;
 

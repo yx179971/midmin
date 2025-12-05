@@ -8,15 +8,18 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid()) @db.Uuid
-  username String  @unique
-  password String
-  email    String? @unique
-  mobile   String? @unique
-  avatar   String  @default("")
-  bio      String  @default("")
-  groupId  String? @db.Uuid
+  id        String  @id @default(uuid()) @db.Uuid
+  username  String  @unique
+  password  String
+  email     String? @unique
+  mobile    String? @unique
+  avatar    String  @default("")
+  bio       String  @default("")
+  failCount Int     @default(0)
+  status    String  @default("")
+  groupId   String? @db.Uuid
 
+  lockUntil   DateTime?
   lastLoginAt DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -24,6 +27,11 @@ model User {
   group   PermissionGroup? @relation(fields: [groupId], references: [id])
   posts   Post[]
   comment Comment[]
+}
+
+model Conf {
+  key   String @id @db.VarChar(50)
+  value String @db.Text
 }
 
 model PermissionGroup {

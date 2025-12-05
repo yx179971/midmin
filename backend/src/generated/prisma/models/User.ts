@@ -19,8 +19,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  failCount: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  failCount: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -31,7 +41,10 @@ export type UserMinAggregateOutputType = {
   mobile: string | null
   avatar: string | null
   bio: string | null
+  failCount: number | null
+  status: string | null
   groupId: string | null
+  lockUntil: Date | null
   lastLoginAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -45,7 +58,10 @@ export type UserMaxAggregateOutputType = {
   mobile: string | null
   avatar: string | null
   bio: string | null
+  failCount: number | null
+  status: string | null
   groupId: string | null
+  lockUntil: Date | null
   lastLoginAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -59,13 +75,24 @@ export type UserCountAggregateOutputType = {
   mobile: number
   avatar: number
   bio: number
+  failCount: number
+  status: number
   groupId: number
+  lockUntil: number
   lastLoginAt: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  failCount?: true
+}
+
+export type UserSumAggregateInputType = {
+  failCount?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -75,7 +102,10 @@ export type UserMinAggregateInputType = {
   mobile?: true
   avatar?: true
   bio?: true
+  failCount?: true
+  status?: true
   groupId?: true
+  lockUntil?: true
   lastLoginAt?: true
   createdAt?: true
   updatedAt?: true
@@ -89,7 +119,10 @@ export type UserMaxAggregateInputType = {
   mobile?: true
   avatar?: true
   bio?: true
+  failCount?: true
+  status?: true
   groupId?: true
+  lockUntil?: true
   lastLoginAt?: true
   createdAt?: true
   updatedAt?: true
@@ -103,7 +136,10 @@ export type UserCountAggregateInputType = {
   mobile?: true
   avatar?: true
   bio?: true
+  failCount?: true
+  status?: true
   groupId?: true
+  lockUntil?: true
   lastLoginAt?: true
   createdAt?: true
   updatedAt?: true
@@ -148,6 +184,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -178,6 +226,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -190,11 +240,16 @@ export type UserGroupByOutputType = {
   mobile: string | null
   avatar: string
   bio: string
+  failCount: number
+  status: string
   groupId: string | null
+  lockUntil: Date | null
   lastLoginAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -225,7 +280,10 @@ export type UserWhereInput = {
   mobile?: Prisma.StringNullableFilter<"User"> | string | null
   avatar?: Prisma.StringFilter<"User"> | string
   bio?: Prisma.StringFilter<"User"> | string
+  failCount?: Prisma.IntFilter<"User"> | number
+  status?: Prisma.StringFilter<"User"> | string
   groupId?: Prisma.UuidNullableFilter<"User"> | string | null
+  lockUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -242,7 +300,10 @@ export type UserOrderByWithRelationInput = {
   mobile?: Prisma.SortOrderInput | Prisma.SortOrder
   avatar?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  failCount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lockUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -262,7 +323,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   avatar?: Prisma.StringFilter<"User"> | string
   bio?: Prisma.StringFilter<"User"> | string
+  failCount?: Prisma.IntFilter<"User"> | number
+  status?: Prisma.StringFilter<"User"> | string
   groupId?: Prisma.UuidNullableFilter<"User"> | string | null
+  lockUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -279,13 +343,18 @@ export type UserOrderByWithAggregationInput = {
   mobile?: Prisma.SortOrderInput | Prisma.SortOrder
   avatar?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  failCount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lockUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -299,7 +368,10 @@ export type UserScalarWhereWithAggregatesInput = {
   mobile?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   avatar?: Prisma.StringWithAggregatesFilter<"User"> | string
   bio?: Prisma.StringWithAggregatesFilter<"User"> | string
+  failCount?: Prisma.IntWithAggregatesFilter<"User"> | number
+  status?: Prisma.StringWithAggregatesFilter<"User"> | string
   groupId?: Prisma.UuidNullableWithAggregatesFilter<"User"> | string | null
+  lockUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -313,6 +385,9 @@ export type UserCreateInput = {
   mobile?: string | null
   avatar?: string
   bio?: string
+  failCount?: number
+  status?: string
+  lockUntil?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -329,7 +404,10 @@ export type UserUncheckedCreateInput = {
   mobile?: string | null
   avatar?: string
   bio?: string
+  failCount?: number
+  status?: string
   groupId?: string | null
+  lockUntil?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -345,6 +423,9 @@ export type UserUpdateInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -361,7 +442,10 @@ export type UserUncheckedUpdateInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -377,7 +461,10 @@ export type UserCreateManyInput = {
   mobile?: string | null
   avatar?: string
   bio?: string
+  failCount?: number
+  status?: string
   groupId?: string | null
+  lockUntil?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -391,6 +478,9 @@ export type UserUpdateManyMutationInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -404,7 +494,10 @@ export type UserUncheckedUpdateManyInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -418,10 +511,17 @@ export type UserCountOrderByAggregateInput = {
   mobile?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  failCount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
+  lockUntil?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  failCount?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -432,7 +532,10 @@ export type UserMaxOrderByAggregateInput = {
   mobile?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  failCount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
+  lockUntil?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -446,10 +549,17 @@ export type UserMinOrderByAggregateInput = {
   mobile?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  failCount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
+  lockUntil?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  failCount?: Prisma.SortOrder
 }
 
 export type UserListRelationFilter = {
@@ -473,6 +583,14 @@ export type StringFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -561,6 +679,9 @@ export type UserCreateWithoutGroupInput = {
   mobile?: string | null
   avatar?: string
   bio?: string
+  failCount?: number
+  status?: string
+  lockUntil?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -576,6 +697,9 @@ export type UserUncheckedCreateWithoutGroupInput = {
   mobile?: string | null
   avatar?: string
   bio?: string
+  failCount?: number
+  status?: string
+  lockUntil?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -620,7 +744,10 @@ export type UserScalarWhereInput = {
   mobile?: Prisma.StringNullableFilter<"User"> | string | null
   avatar?: Prisma.StringFilter<"User"> | string
   bio?: Prisma.StringFilter<"User"> | string
+  failCount?: Prisma.IntFilter<"User"> | number
+  status?: Prisma.StringFilter<"User"> | string
   groupId?: Prisma.UuidNullableFilter<"User"> | string | null
+  lockUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -634,6 +761,9 @@ export type UserCreateWithoutPostsInput = {
   mobile?: string | null
   avatar?: string
   bio?: string
+  failCount?: number
+  status?: string
+  lockUntil?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -649,7 +779,10 @@ export type UserUncheckedCreateWithoutPostsInput = {
   mobile?: string | null
   avatar?: string
   bio?: string
+  failCount?: number
+  status?: string
   groupId?: string | null
+  lockUntil?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -680,6 +813,9 @@ export type UserUpdateWithoutPostsInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -695,7 +831,10 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -710,6 +849,9 @@ export type UserCreateWithoutCommentInput = {
   mobile?: string | null
   avatar?: string
   bio?: string
+  failCount?: number
+  status?: string
+  lockUntil?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -725,7 +867,10 @@ export type UserUncheckedCreateWithoutCommentInput = {
   mobile?: string | null
   avatar?: string
   bio?: string
+  failCount?: number
+  status?: string
   groupId?: string | null
+  lockUntil?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -756,6 +901,9 @@ export type UserUpdateWithoutCommentInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -771,7 +919,10 @@ export type UserUncheckedUpdateWithoutCommentInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -786,6 +937,9 @@ export type UserCreateManyGroupInput = {
   mobile?: string | null
   avatar?: string
   bio?: string
+  failCount?: number
+  status?: string
+  lockUntil?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -799,6 +953,9 @@ export type UserUpdateWithoutGroupInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -814,6 +971,9 @@ export type UserUncheckedUpdateWithoutGroupInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -829,6 +989,9 @@ export type UserUncheckedUpdateManyWithoutGroupInput = {
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
+  failCount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  lockUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -882,7 +1045,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   mobile?: boolean
   avatar?: boolean
   bio?: boolean
+  failCount?: boolean
+  status?: boolean
   groupId?: boolean
+  lockUntil?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -900,7 +1066,10 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   mobile?: boolean
   avatar?: boolean
   bio?: boolean
+  failCount?: boolean
+  status?: boolean
   groupId?: boolean
+  lockUntil?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -915,7 +1084,10 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   mobile?: boolean
   avatar?: boolean
   bio?: boolean
+  failCount?: boolean
+  status?: boolean
   groupId?: boolean
+  lockUntil?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -930,13 +1102,16 @@ export type UserSelectScalar = {
   mobile?: boolean
   avatar?: boolean
   bio?: boolean
+  failCount?: boolean
+  status?: boolean
   groupId?: boolean
+  lockUntil?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "password" | "email" | "mobile" | "avatar" | "bio" | "groupId" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "password" | "email" | "mobile" | "avatar" | "bio" | "failCount" | "status" | "groupId" | "lockUntil" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   group?: boolean | Prisma.User$groupArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
@@ -965,7 +1140,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     mobile: string | null
     avatar: string
     bio: string
+    failCount: number
+    status: string
     groupId: string | null
+    lockUntil: Date | null
     lastLoginAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -1402,7 +1580,10 @@ export interface UserFieldRefs {
   readonly mobile: Prisma.FieldRef<"User", 'String'>
   readonly avatar: Prisma.FieldRef<"User", 'String'>
   readonly bio: Prisma.FieldRef<"User", 'String'>
+  readonly failCount: Prisma.FieldRef<"User", 'Int'>
+  readonly status: Prisma.FieldRef<"User", 'String'>
   readonly groupId: Prisma.FieldRef<"User", 'String'>
+  readonly lockUntil: Prisma.FieldRef<"User", 'DateTime'>
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>

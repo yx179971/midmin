@@ -10,7 +10,16 @@ export class InitData {
   async init() {
     if ((await prisma.user.count()) === 0) {
       await prisma.$transaction(async tx => {
-        const permissionGroup = await tx.permissionGroup.create({
+        const superAdminGroup = await tx.permissionGroup.create({
+          data: {
+            name: SystemPermissionGroup.SUPER_ADMIN,
+            permissions: ['*'],
+          },
+          select: {
+            id: true,
+          },
+        });
+        const adminGroup = await tx.permissionGroup.create({
           data: {
             name: SystemPermissionGroup.ADMIN,
             permissions: ['user:manage', 'permissionGroup:manage'],
@@ -25,11 +34,12 @@ export class InitData {
             {
               username: 'superadmin',
               password: await bcrypt.hash('superadmin!@#', 8),
+              groupId: superAdminGroup.id,
             },
             {
               username: 'admin',
               password: await bcrypt.hash('admin!@#', 8),
-              groupId: permissionGroup.id,
+              groupId: adminGroup.id,
             },
           ],
         });
