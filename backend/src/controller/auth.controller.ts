@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpServerResponse,
   Inject,
   Post,
@@ -25,6 +26,11 @@ export class AuthController {
     return new HttpServerResponse(this.ctx).success().json(this.ctx.state.user);
   }
 
+  @Get('/login')
+  async getLogin() {
+    return new HttpServerResponse(this.ctx).success().json(this.ctx.state.user);
+  }
+
   @Post('/logout')
   async logout() {
     this.ctx.session.userId = null;
@@ -34,7 +40,8 @@ export class AuthController {
   @Post('/register')
   async register(@Body() dto: RegisterDTO) {
     const user = await this.userService.create(dto);
-    return new HttpServerResponse(this.ctx).success().json(user);
+    this.ctx.session.userId = user.id;
+    return new HttpServerResponse(this.ctx).success().json({});
   }
 
   @Post('/send-code')

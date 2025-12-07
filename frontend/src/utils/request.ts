@@ -1,47 +1,49 @@
 import axios from 'axios'
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosInstance, AxiosError } from 'axios'
+import { ElNotification } from 'element-plus';
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = null> {
   success: boolean
   data: T
   message?: string
 }
 
 const api: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
-  timeout: 10000,
+  baseURL: '/api',
 })
 
+const toSearchParams = (obj: Record<string, string|number|boolean>): URLSearchParams => {
+  const qs = new URLSearchParams()
+  Object.entries(obj).forEach(([k, v]) => {
+    if (v !== undefined && v !== null) {
+      qs.append(k, String(v))
+    }
+  })
+  return qs
+}
+
 api.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
-    const token = localStorage.getItem('token')
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`
+  (config) => {
+    if (config.params) {
+      config.params = toSearchParams(config.params)
     }
     return config
   },
-  (error: any) => {
+  (error) => {
     return Promise.reject(error)
   },
 )
 
 api.interceptors.response.use(
-  (response: AxiosResponse<ApiResponse>) => {
-    return response.data
+  (response) => {
+    return response
   },
-  (error: any) => {
-    const status = error.response?.status
-
-    if (status === 401) {
-      localStorage.removeItem('token')
-      if (window.location.pathname !== '/login') {
-        window.location.href = '/login'
-      }
-    } else if (status === 403) {
-      if (window.location.pathname !== '/403') {
-        console.warn('访问被拒绝：权限不足')
-      }
-    }
+  (error: AxiosError<ApiResponse>) => {
+    ElNotification({
+      title: 'Error',
+      message: error.response?.data?.message || error.message,
+      type: 'error',
+    })
     return Promise.reject(error)
   },
 )

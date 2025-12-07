@@ -1,25 +1,27 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
-import { userApi } from '@/api/user.ts'
-import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const user = ref<{
-  name: string
-}>({ name: '' })
-const getUser = async () => {
-  user.value = await userApi.getUser()
+const { locale } = useI18n()
+
+const change = () => {
+  locale.value = locale.value === 'zh' ? 'en' : 'zh'
 }
-onMounted(() => {
-  getUser()
-  console.log(user.value)
-})
 </script>
 
 <template>
   <main>
-    <div>
-      {{ user }}
-    </div>
-    <!--    <TheWelcome />-->
+    <HelloWorld :msg="$t('d.dd.ddd')" />
+<!--    <HelloWorld :msg="$t('message.hello')" />-->
+    <el-card>
+      <el-button @click="change">切换语言（Switch Language）</el-button>
+
+      <div style="margin-top: 20px;">
+        <el-date-picker type="date" placeholder="请选择日期" />
+      </div>
+
+      <div style="margin-top: 20px;">
+        <el-pagination :total="200" :page-size="10" />
+      </div>
+    </el-card>
   </main>
 </template>

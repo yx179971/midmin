@@ -7,19 +7,6 @@ import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
 
 const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md')
-import { userApi } from '@/api/user.ts'
-import { onMounted, ref } from 'vue'
-
-const user = ref<{
-  name: string
-}>({ name: '' })
-const getUser = async () => {
-  user.value = await userApi.getUser()
-}
-onMounted(async () => {
-  await getUser()
-  console.log(user.value)
-})
 </script>
 
 <template>
@@ -29,7 +16,6 @@ onMounted(async () => {
     </template>
     <template #heading>Documentation</template>
 
-    {{ user }}’s
     <a href="https://vuejs.org/" target="_blank" rel="noopener">official documentation</a>
     provides you with all information you need to get started.
   </WelcomeItem>

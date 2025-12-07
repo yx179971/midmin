@@ -20,6 +20,7 @@ export class AuthGuard implements IGuard<Context> {
         },
       });
       if (user) {
+        delete user.password;
         context.state.user = user;
         if (user.status === UserStatus.mustChangePwd) {
           context.redirect('/me/update-password');
