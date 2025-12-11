@@ -17,6 +17,9 @@ export default {
       transports: {
         file: false,
         error: false,
+        console: {
+          level: 'info',
+        },
       },
     },
   },
@@ -28,6 +31,7 @@ export default {
   staticFile: {
     dirs: {
       default: {
+        prefix: '/',
         alias: {
           '/': '/index.html',
         },

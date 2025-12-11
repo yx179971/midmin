@@ -1,3 +1,6 @@
-#npx prisma db seed
+#!/bin/sh
+set -e
 npx prisma migrate dev
-npm run start
+#npx prisma db seed
+#npm run start
+pm2-runtime start ecosystem.config.js

@@ -11,5 +11,25 @@ services:
       POSTGRES_PASSWORD: ${PG_PASS}
       PGDATA: /var/lib/postgresql/data
     volumes:
-#      - ./pgdata:/var/lib/postgresql/data
-      - ~/midmin_pg/pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
+#      - ~/midmin_pg/pgdata:/var/lib/postgresql/data
+
+  backend:
+    container_name: ${APP_NAME}_backend
+#    image: deploy_node8
+    build:
+      context: ./tmp
+      dockerfile: ./Dockerfile
+    restart: always
+    #    user: "root"
+    env_file:
+      - .env
+    working_dir: /www
+    ports:
+      - ${BACKEND_PORT}:7001
+    volumes:
+      - ./backend:/www
+      - ./upload:/www/upload
+    command: /bin/sh -c "chmod +x /www/start.sh && /www/start.sh"
+    depends_on:
+      - db

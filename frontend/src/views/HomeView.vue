@@ -23,5 +23,6 @@ const change = () => {
         <el-pagination :total="200" :page-size="10" />
       </div>
     </el-card>
+    <router-link to="/users" >Go to Users</router-link>
   </main>
 </template>
